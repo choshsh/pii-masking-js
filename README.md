@@ -42,6 +42,7 @@ console.log(maskPhoneOrTel('010-1234-5678')); // 010-12**-56**
 console.log(maskEmail('user@example.com')); // us**@example.com
 console.log(maskRnn('901231-1234567')); // 901231-1******
 console.log(maskCardNumber('1234-5678-9012-3456')); // 1234-****-****-3456
+console.log(maskCardNumber(1234567890123456)); // 1234-****-****-3456
 console.log(maskAccountNumber('123-456-789012')); // ***-***-**9012
 console.log(maskAddress('서울시 강남구 테헤란로 123')); // 서울시 강남구 *** ***
 ```
@@ -65,14 +66,15 @@ const email: string = maskEmail('user@example.com');
 
 ## API
 
-### maskPhoneOrTel(phone: string): string
+### maskPhoneOrTel(phone: string | number): string
 
-전화번호를 마스킹합니다.
+전화번호를 마스킹합니다. `number` 타입으로 전달 시 `0`으로 시작하는 값은 유실될 수 있으므로 `string` 사용을 권장합니다.
 
 ```javascript
 maskPhoneOrTel('010-1234-5678'); // '010-12**-56**'
 maskPhoneOrTel('02-123-4567'); // '02-1**-45**'
 maskPhoneOrTel('031-1234-5678'); // '031-12**-56**'
+maskPhoneOrTel(15881234); // '158812**'
 ```
 
 ### maskEmail(email: string): string
@@ -86,13 +88,14 @@ maskEmail('ab@example.com'); // '**@example.com'
 maskEmail('test@example.com'); // 'te**@example.com'
 ```
 
-### maskRnn(rnn: string): string
+### maskRnn(rnn: string | number): string
 
 주민등록번호(RRN)를 마스킹합니다.
 
 ```javascript
 maskRnn('901231-1234567'); // '901231-1******'
 maskRnn('9012311234567'); // '9012311******'
+maskRnn(9012311234567); // '9012311******'
 ```
 
 ### maskAddress(address: string): string
@@ -104,22 +107,24 @@ maskAddress('서울특별시 강남구 테헤란로 123'); // '서울특별시 �
 maskAddress('서울시 강남구 101동 202호'); // '서울시 강남구 *** ***'
 ```
 
-### maskCardNumber(cardNumber: string): string
+### maskCardNumber(cardNumber: string | number): string
 
 카드번호를 마스킹합니다. 앞 4자리와 뒤 4자리만 보이고 나머지를 마스킹합니다.
 
 ```javascript
 maskCardNumber('1234567890123456'); // '1234-****-****-3456'
 maskCardNumber('1234-5678-9012-3456'); // '1234-****-****-3456'
+maskCardNumber(1234567890123456); // '1234-****-****-3456'
 ```
 
-### maskAccountNumber(accountNumber: string): string
+### maskAccountNumber(accountNumber: string | number): string
 
 계좌번호를 마스킹합니다. 뒤 4자리만 보이고 나머지를 마스킹합니다.
 
 ```javascript
 maskAccountNumber('123-456-789012'); // '***-***-**9012'
 maskAccountNumber('123456789012'); // '********9012'
+maskAccountNumber(123456789012); // '********9012'
 ```
 
 ## 마스킹 규칙
