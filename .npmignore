@@ -1,0 +1,11 @@
+src/
+test/
+scripts/
+.github/
+tsconfig.json
+.gitignore
+*.test.js
+coverage/
+.DS_Store
+dist-esm/
+
