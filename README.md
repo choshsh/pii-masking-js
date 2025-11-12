@@ -1,4 +1,4 @@
-# pii-masking-js
+# @cho_o/pii-masking-js
 
 개인식별정보(PII: Personally Identifiable Information) 마스킹을 위한 경량 JavaScript/TypeScript 라이브러리입니다.
 
@@ -13,15 +13,15 @@
 ## 설치
 
 ```bash
-npm install pii-masking-js
+npm install @cho_o/pii-masking-js
 ```
 
 ```bash
-yarn add pii-masking-js
+yarn add @cho_o/pii-masking-js
 ```
 
 ```bash
-pnpm add pii-masking-js
+pnpm add @cho_o/pii-masking-js
 ```
 
 ## 사용법
@@ -29,9 +29,16 @@ pnpm add pii-masking-js
 ### ES Modules
 
 ```javascript
-import { maskPhone, maskEmail, maskRnn, maskAddress, maskCardNumber, maskAccountNumber } from 'pii-masking-js';
+import {
+  maskPhoneOrTel,
+  maskEmail,
+  maskRnn,
+  maskAddress,
+  maskCardNumber,
+  maskAccountNumber,
+} from '@cho_o/pii-masking-js';
 
-console.log(maskPhone('010-1234-5678')); // 010-12**-56**
+console.log(maskPhoneOrTel('010-1234-5678')); // 010-12**-56**
 console.log(maskEmail('user@example.com')); // us**@example.com
 console.log(maskRnn('901231-1234567')); // 901231-1******
 console.log(maskCardNumber('1234-5678-9012-3456')); // 1234-****-****-3456
@@ -42,30 +49,30 @@ console.log(maskAddress('서울시 강남구 테헤란로 123')); // 서울시 �
 ### CommonJS
 
 ```javascript
-const { maskPhone, maskEmail, maskRnn } = require('pii-masking-js');
+const { maskPhoneOrTel, maskEmail, maskRnn } = require('@cho_o/pii-masking-js');
 
-console.log(maskPhone('010-1234-5678')); // 010-12**-56**
+console.log(maskPhoneOrTel('010-1234-5678')); // 010-12**-56**
 ```
 
 ### TypeScript
 
 ```typescript
-import { maskPhone, maskEmail, MaskOptions } from 'pii-masking-js';
+import { maskPhoneOrTel, maskEmail } from '@cho_o/pii-masking-js';
 
-const phone: string = maskPhone('010-1234-5678');
+const phone: string = maskPhoneOrTel('010-1234-5678');
 const email: string = maskEmail('user@example.com');
 ```
 
 ## API
 
-### maskPhone(phone: string): string
+### maskPhoneOrTel(phone: string): string
 
 전화번호를 마스킹합니다.
 
 ```javascript
-maskPhone('010-1234-5678'); // '010-12**-56**'
-maskPhone('02-123-4567'); // '02-1**-45**'
-maskPhone('031-1234-5678'); // '031-12**-56**'
+maskPhoneOrTel('010-1234-5678'); // '010-12**-56**'
+maskPhoneOrTel('02-123-4567'); // '02-1**-45**'
+maskPhoneOrTel('031-1234-5678'); // '031-12**-56**'
 ```
 
 ### maskEmail(email: string): string

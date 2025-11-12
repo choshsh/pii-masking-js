@@ -5,7 +5,7 @@ import { DEFAULT_MASK_CHAR } from './constants';
  * @param phone - 마스킹할 전화번호 문자열
  * @returns 마스킹된 전화번호
  */
-export function maskPhone(phone: string): string {
+export function maskPhoneOrTel(phone: string): string {
   if (!phone || typeof phone !== 'string') {
     return '';
   }

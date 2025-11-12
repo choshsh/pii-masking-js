@@ -1,4 +1,4 @@
-import { maskPhone } from './phone';
+import { maskPhoneOrTel } from './phoneOrTel';
 import { maskEmail } from './email';
 import { maskRnn } from './rnn';
 import { maskAddress } from './address';
@@ -6,7 +6,7 @@ import { maskCardNumber } from './cardNumber';
 import { maskAccountNumber } from './accountNumber';
 
 // Named exports
-export { maskPhone } from './phone';
+export { maskPhoneOrTel } from './phoneOrTel';
 export { maskEmail } from './email';
 export { maskRnn } from './rnn';
 export { maskAddress } from './address';
@@ -15,15 +15,10 @@ export { maskAccountNumber } from './accountNumber';
 
 // 기본 export
 export default {
-  maskPhone,
+  maskPhone: maskPhoneOrTel,
   maskEmail,
   maskRnn,
   maskAddress,
   maskCardNumber,
   maskAccountNumber,
 };
-
-// 타입 정의
-export interface MaskOptions {
-  maskChar?: string;
-}
