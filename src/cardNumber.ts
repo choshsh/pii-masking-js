@@ -6,7 +6,6 @@ import { DEFAULT_MASK_CHAR } from './constants';
  * @returns 마스킹된 카드번호
  */
 export function maskCardNumber(cardNumber: string): string {
-  const maskChar = DEFAULT_MASK_CHAR;
   if (!cardNumber || typeof cardNumber !== 'string') {
     return '';
   }
@@ -19,7 +18,7 @@ export function maskCardNumber(cardNumber: string): string {
 
   const first4 = numbers.slice(0, 4);
   const last4 = numbers.slice(-4);
-  const middleMasked = maskChar.repeat(numbers.length - 8);
+  const middleMasked = DEFAULT_MASK_CHAR.repeat(numbers.length - 8);
 
   const masked = `${first4}${middleMasked}${last4}`;
 

@@ -1,5 +1,3 @@
-import { DEFAULT_MASK_CHAR } from './constants';
-
 /**
  * 주소 마스킹 처리
  * @param address - 마스킹할 주소

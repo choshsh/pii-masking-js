@@ -6,7 +6,6 @@ import { DEFAULT_MASK_CHAR } from './constants';
  * @returns 마스킹된 이메일 주소
  */
 export function maskEmail(email: string): string {
-  const maskChar = DEFAULT_MASK_CHAR;
   if (!email || typeof email !== 'string' || !email.includes('@')) {
     return email;
   }
@@ -15,8 +14,8 @@ export function maskEmail(email: string): string {
   const len = localPart.length;
 
   if (len <= 2) {
-    return `${maskChar.repeat(len)}@${domain}`;
+    return `${DEFAULT_MASK_CHAR.repeat(len)}@${domain}`;
   }
 
-  return `${localPart.slice(0, 2)}${maskChar.repeat(len - 2)}@${domain}`;
+  return `${localPart.slice(0, 2)}${DEFAULT_MASK_CHAR.repeat(len - 2)}@${domain}`;
 }

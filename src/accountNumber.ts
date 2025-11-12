@@ -6,7 +6,6 @@ import { DEFAULT_MASK_CHAR } from './constants';
  * @returns 마스킹된 계좌번호
  */
 export function maskAccountNumber(accountNumber: string): string {
-  const maskChar = DEFAULT_MASK_CHAR;
   if (!accountNumber || typeof accountNumber !== 'string') {
     return '';
   }
@@ -24,7 +23,7 @@ export function maskAccountNumber(accountNumber: string): string {
       if (digitsToKeep > 0) {
         digitsToKeep--;
       } else {
-        chars[i] = maskChar;
+        chars[i] = DEFAULT_MASK_CHAR;
       }
     }
   }
