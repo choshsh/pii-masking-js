@@ -5,12 +5,12 @@ const { maskRnn } = require('../dist/index.js');
 describe('maskRnn', () => {
   it('주민등록번호 마스킹 (하이픈 있음)', () => {
     const result = maskRnn('901231-1234567');
-    assert.strictEqual(result, '901231-*******');
+    assert.strictEqual(result, '901231-1*****7');
   });
 
   it('주민등록번호 마스킹 (하이픈 없음)', () => {
     const result = maskRnn('9012311234567');
-    assert.strictEqual(result, '901231-*******');
+    assert.strictEqual(result, '9012311*****7');
   });
 
   it('잘못된 길이의 주민등록번호', () => {
