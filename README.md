@@ -125,9 +125,9 @@ maskAddress('서울시 강남구 101동 202호'); // '서울시 강남구 *** **
 카드번호를 마스킹합니다. 앞 4자리와 뒤 4자리만 남기고 가운데 번호를 마스킹합니다.
 
 ```javascript
-maskCardNumber('1234567890123456'); // '1234-****-****-3456'
+maskCardNumber('1234567890123456'); // '1234********3456'
 maskCardNumber('1234-5678-9012-3456'); // '1234-****-****-3456'
-maskCardNumber(1234567890123456); // '1234-****-****-3456'
+maskCardNumber(1234567890123456); // '1234********3456'
 ```
 
 ### maskAccountNumber(accountNumber: string | number): string
