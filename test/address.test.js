@@ -18,6 +18,21 @@ describe('maskAddress', () => {
     assert.strictEqual(result, '서울시 강남구 *** ***');
   });
 
+  it('도로명, 동, 호수 주소 마스킹', () => {
+    const result = maskAddress('강남대로 101동 202호');
+    assert.strictEqual(result, '*** *** ***');
+  });
+
+  it('번지 주소 마스킹', () => {
+    const result = maskAddress('강남대로 101번지 202호');
+    assert.strictEqual(result, '*** *** ***');
+  });
+
+  it('동, 호수만 주소 마스킹', () => {
+    const result = maskAddress('101동 202호');
+    assert.strictEqual(result, '*** ***');
+  });
+
   it('빈 문자열은 그대로 반환', () => {
     const result = maskAddress('');
     assert.strictEqual(result, '');

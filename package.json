@@ -25,7 +25,7 @@
     "build:cjs": "tsc --module commonjs --outDir dist --declaration false --removeComments",
     "build:esm": "tsc --module esnext --outDir dist-esm --removeComments && node scripts/rename-esm.js",
     "build:types": "tsc --emitDeclarationOnly --outDir dist",
-    "test": "node --test test/accountNumber.test.js test/address.test.js test/cardNumber.test.js test/email.test.js test/phone.test.js test/rnn.test.js",
+    "test": "node --test test/*.test.js",
     "prepublishOnly": "npm run build",
     "version:patch": "npm version patch",
     "version:minor": "npm version minor",
