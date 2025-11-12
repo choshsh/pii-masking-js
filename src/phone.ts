@@ -1,10 +1,13 @@
+import { DEFAULT_MASK_CHAR } from './constants';
+
 /**
  * 전화번호 마스킹 처리
  * @param phone - 마스킹할 전화번호 문자열
- * @param maskChar - 마스킹에 사용할 문자 (기본값: '*')
  * @returns 마스킹된 전화번호
  */
-export function maskPhone(phone: string, maskChar: string = '*'): string {
+export function maskPhone(phone: string): string {
+  const maskChar = DEFAULT_MASK_CHAR;
+
   if (!phone || typeof phone !== 'string') {
     return '';
   }

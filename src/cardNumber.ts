@@ -1,10 +1,12 @@
+import { DEFAULT_MASK_CHAR } from './constants';
+
 /**
  * 카드번호 마스킹 처리
  * @param cardNumber - 마스킹할 카드번호
- * @param maskChar - 마스킹에 사용할 문자 (기본값: '*')
  * @returns 마스킹된 카드번호
  */
-export function maskCardNumber(cardNumber: string, maskChar: string = '*'): string {
+export function maskCardNumber(cardNumber: string): string {
+  const maskChar = DEFAULT_MASK_CHAR;
   if (!cardNumber || typeof cardNumber !== 'string') {
     return '';
   }
@@ -20,7 +22,6 @@ export function maskCardNumber(cardNumber: string, maskChar: string = '*'): stri
   const middleMasked = maskChar.repeat(numbers.length - 10);
 
   const masked = `${first6}${middleMasked}${last4}`;
-  
+
   return masked.replace(/(.{4})/g, '$1-').replace(/-$/, '');
 }
-

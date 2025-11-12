@@ -22,10 +22,4 @@ describe('maskAccountNumber', () => {
     const result = maskAccountNumber('');
     assert.strictEqual(result, '');
   });
-
-  it('커스텀 마스킹 문자 사용', () => {
-    const result = maskAccountNumber('123456789012', 'X');
-    assert.strictEqual(result, '123XXXXXX012');
-  });
 });
-

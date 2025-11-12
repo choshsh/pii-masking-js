@@ -1,10 +1,12 @@
+import { DEFAULT_MASK_CHAR } from './constants';
+
 /**
  * 이메일 주소 마스킹 처리
  * @param email - 마스킹할 이메일 주소
- * @param maskChar - 마스킹에 사용할 문자 (기본값: '*')
  * @returns 마스킹된 이메일 주소
  */
-export function maskEmail(email: string, maskChar: string = '*'): string {
+export function maskEmail(email: string): string {
+  const maskChar = DEFAULT_MASK_CHAR;
   if (!email || typeof email !== 'string' || !email.includes('@')) {
     return email;
   }
@@ -22,4 +24,3 @@ export function maskEmail(email: string, maskChar: string = '*'): string {
 
   return `${localPart.slice(0, 3)}${maskChar.repeat(len - 3)}@${domain}`;
 }
-

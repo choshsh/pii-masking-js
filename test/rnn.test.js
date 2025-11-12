@@ -22,10 +22,4 @@ describe('maskRnn', () => {
     const result = maskRnn('');
     assert.strictEqual(result, '');
   });
-
-  it('커스텀 마스킹 문자 사용', () => {
-    const result = maskRnn('901231-1234567', 'X');
-    assert.strictEqual(result, '901231-XXXXXXX');
-  });
 });
-

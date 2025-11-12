@@ -22,10 +22,4 @@ describe('maskAddress', () => {
     const result = maskAddress('');
     assert.strictEqual(result, '');
   });
-
-  it('커스텀 마스킹 문자 사용', () => {
-    const result = maskAddress('서울시 강남구 테헤란로 123', '#');
-    assert.strictEqual(result, '서울시 강남구 ########');
-  });
 });
-

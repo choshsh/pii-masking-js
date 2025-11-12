@@ -1,10 +1,12 @@
+import { DEFAULT_MASK_CHAR } from './constants';
+
 /**
  * 주민등록번호 마스킹 처리
  * @param rnn - 마스킹할 주민등록번호 (RRN: Resident Registration Number)
- * @param maskChar - 마스킹에 사용할 문자 (기본값: '*')
  * @returns 마스킹된 주민등록번호
  */
-export function maskRnn(rnn: string, maskChar: string = '*'): string {
+export function maskRnn(rnn: string): string {
+  const maskChar = DEFAULT_MASK_CHAR;
   if (!rnn || typeof rnn !== 'string') {
     return '';
   }
@@ -23,4 +25,3 @@ export function maskRnn(rnn: string, maskChar: string = '*'): string {
 
   return masked;
 }
-

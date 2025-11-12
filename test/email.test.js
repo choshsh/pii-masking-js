@@ -37,10 +37,4 @@ describe('maskEmail', () => {
     const result = maskEmail('');
     assert.strictEqual(result, '');
   });
-
-  it('커스텀 마스킹 문자 사용', () => {
-    const result = maskEmail('test@example.com', '#');
-    assert.strictEqual(result, 'tes#@example.com');
-  });
 });
-

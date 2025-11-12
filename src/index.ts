@@ -27,4 +27,3 @@ export default {
 export interface MaskOptions {
   maskChar?: string;
 }
-

@@ -1,10 +1,12 @@
+import { DEFAULT_MASK_CHAR } from './constants';
+
 /**
  * 주소 마스킹 처리
  * @param address - 마스킹할 주소
- * @param maskChar - 마스킹에 사용할 문자 (기본값: '*')
  * @returns 마스킹된 주소
  */
-export function maskAddress(address: string, maskChar: string = '*'): string {
+export function maskAddress(address: string): string {
+  const maskChar = DEFAULT_MASK_CHAR;
   if (!address || typeof address !== 'string') {
     return '';
   }
@@ -17,13 +19,12 @@ export function maskAddress(address: string, maskChar: string = '*'): string {
 
   const visiblePart = parts.slice(0, 2).join(' ');
   const maskedLength = address.length - visiblePart.length - 1; // -1 for the space
-  
+
   if (maskedLength <= 0) {
     return visiblePart;
   }
-  
+
   const maskedPart = maskChar.repeat(maskedLength);
-  
+
   return `${visiblePart} ${maskedPart}`;
 }
-

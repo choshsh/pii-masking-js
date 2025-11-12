@@ -1,10 +1,12 @@
+import { DEFAULT_MASK_CHAR } from './constants';
+
 /**
  * 계좌번호 마스킹 처리
  * @param accountNumber - 마스킹할 계좌번호
- * @param maskChar - 마스킹에 사용할 문자 (기본값: '*')
  * @returns 마스킹된 계좌번호
  */
-export function maskAccountNumber(accountNumber: string, maskChar: string = '*'): string {
+export function maskAccountNumber(accountNumber: string): string {
+  const maskChar = DEFAULT_MASK_CHAR;
   if (!accountNumber || typeof accountNumber !== 'string') {
     return '';
   }
@@ -26,4 +28,3 @@ export function maskAccountNumber(accountNumber: string, maskChar: string = '*')
 
   return masked;
 }
-
