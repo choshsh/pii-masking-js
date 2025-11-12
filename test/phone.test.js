@@ -22,9 +22,20 @@ describe('maskPhoneOrTel', () => {
     const result = maskPhoneOrTel('031-123-5678');
     assert.strictEqual(result, '031-12*-56**');
   });
+
   it('일반 전화번호 마스킹 (지역번호 3자리) (중간 번호 4자리)', () => {
     const result = maskPhoneOrTel('031-1234-5678');
     assert.strictEqual(result, '031-12**-56**');
+  });
+
+  it('안심번호/사업자 가상번호 전화번호 마스킹 (0507-1309-5155)', () => {
+    const result = maskPhoneOrTel('0507-1234-5678');
+    assert.strictEqual(result, '0507-12**-56**');
+  });
+
+  it('안심번호/사업자 가상번호 전화번호 마스킹 (050713095155)', () => {
+    const result = maskPhoneOrTel('050712345678');
+    assert.strictEqual(result, '050712**56**');
   });
 
   it('빈 문자열 처리', () => {
