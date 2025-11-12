@@ -15,10 +15,7 @@ export function maskAddress(address: string): string {
   }
 
   const visiblePart = parts.slice(0, 2).join(' ');
-  const maskedPart = parts
-    .slice(2)
-    .map(() => '***')
-    .join(' ');
+  const maskedPart = '*** '.repeat(parts.length - 2).trimEnd();
 
   return `${visiblePart} ${maskedPart}`;
 }

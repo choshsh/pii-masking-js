@@ -22,8 +22,8 @@
   ],
   "scripts": {
     "build": "npm run build:cjs && npm run build:esm && npm run build:types",
-    "build:cjs": "tsc --module commonjs --outDir dist --declaration false",
-    "build:esm": "tsc --module esnext --outDir dist-esm && node scripts/rename-esm.js",
+    "build:cjs": "tsc --module commonjs --outDir dist --declaration false --removeComments",
+    "build:esm": "tsc --module esnext --outDir dist-esm --removeComments && node scripts/rename-esm.js",
     "build:types": "tsc --emitDeclarationOnly --outDir dist",
     "test": "node --test test/accountNumber.test.js test/address.test.js test/cardNumber.test.js test/email.test.js test/phone.test.js test/rnn.test.js",
     "prepublishOnly": "npm run build"

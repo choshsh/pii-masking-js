@@ -22,5 +22,9 @@ export function maskCardNumber(cardNumber: string): string {
 
   const masked = `${first4}${middleMasked}${last4}`;
 
-  return masked.replace(/(.{4})/g, '$1-').replace(/-$/, '');
+  const parts = [];
+  for (let i = 0; i < masked.length; i += 4) {
+    parts.push(masked.slice(i, i + 4));
+  }
+  return parts.join('-');
 }
