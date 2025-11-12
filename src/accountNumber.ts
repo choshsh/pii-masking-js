@@ -5,17 +5,19 @@ import { DEFAULT_MASK_CHAR } from './constants';
  * @param accountNumber - 마스킹할 계좌번호
  * @returns 마스킹된 계좌번호
  */
-export function maskAccountNumber(accountNumber: string): string {
-  if (!accountNumber || typeof accountNumber !== 'string') {
+export function maskAccountNumber(accountNumber: string | number): string {
+  if (accountNumber === null || accountNumber === undefined) {
     return '';
   }
 
-  const digitsOnly = accountNumber.replace(/\D/g, '');
+  const value = String(accountNumber);
+
+  const digitsOnly = value.replace(/\D/g, '');
   if (digitsOnly.length <= 4) {
-    return accountNumber;
+    return value;
   }
 
-  const chars = accountNumber.split('');
+  const chars = value.split('');
   let digitsToKeep = 4;
 
   for (let i = chars.length - 1; i >= 0; i--) {

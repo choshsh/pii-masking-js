@@ -13,6 +13,11 @@ describe('maskAccountNumber', () => {
     assert.strictEqual(result, '********9012');
   });
 
+  it('숫자 계좌번호 마스킹', () => {
+    const result = maskAccountNumber(123456789012);
+    assert.strictEqual(result, '********9012');
+  });
+
   it('짧은 계좌번호 (4자리 이하)', () => {
     assert.strictEqual(maskAccountNumber('1234'), '1234');
     assert.strictEqual(maskAccountNumber('123'), '123');

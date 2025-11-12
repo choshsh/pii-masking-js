@@ -5,15 +5,17 @@ import { DEFAULT_MASK_CHAR } from './constants';
  * @param cardNumber - 마스킹할 카드번호
  * @returns 마스킹된 카드번호
  */
-export function maskCardNumber(cardNumber: string): string {
-  if (!cardNumber || typeof cardNumber !== 'string') {
+export function maskCardNumber(cardNumber: string | number): string {
+  if (cardNumber === null || cardNumber === undefined) {
     return '';
   }
 
-  const numbers = cardNumber.replace(/\D/g, '');
+  const value = String(cardNumber);
+
+  const numbers = value.replace(/\D/g, '');
 
   if (numbers.length < 12 || numbers.length > 19) {
-    return cardNumber;
+    return value;
   }
 
   const first4 = numbers.slice(0, 4);

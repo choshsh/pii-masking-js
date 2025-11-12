@@ -9,13 +9,15 @@ const maskPart = (value: string, visibleLength: number) => {
  * @param phone - 마스킹할 전화번호 문자열
  * @returns 마스킹된 전화번호
  */
-export function maskPhoneOrTel(phone: string): string {
-  if (!phone || typeof phone !== 'string') {
+export function maskPhoneOrTel(phone: string | number): string {
+  if (phone === null || phone === undefined) {
     return '';
   }
 
-  const hasHyphen = phone.includes('-');
-  const numbers = phone.replace(/\D/g, '');
+  const value = String(phone);
+
+  const hasHyphen = value.includes('-');
+  const numbers = value.replace(/\D/g, '');
   const len = numbers.length;
 
   let p1, p2, p3;
@@ -65,7 +67,7 @@ export function maskPhoneOrTel(phone: string): string {
       }
 
     default: // 규칙에 맞지 않으면 원본 반환
-      return phone;
+      return value;
   }
 
   if (hasHyphen) {

@@ -13,6 +13,11 @@ describe('maskRnn', () => {
     assert.strictEqual(result, '9012311******');
   });
 
+  it('주민등록번호 마스킹 (숫자)', () => {
+    const result = maskRnn(9012311234567);
+    assert.strictEqual(result, '9012311******');
+  });
+
   it('생년월일(6자리)만 있는 경우 맨 앞자리만 남기고 마스킹 처리', () => {
     const result = maskRnn('901231');
     assert.strictEqual(result, '9*****');

@@ -4,7 +4,7 @@ const { maskAddress } = require('../dist/index.js');
 
 describe('maskAddress', () => {
   it('상세 주소 마스킹 (시/군/구 이후)', () => {
-    const result = maskAddress('서울특별시 강남구 테헤란로 123 빌딩 101호');
+    const result = maskAddress('서울특별시 강남구 테헤란로 123 빌딩 999호');
     assert.strictEqual(result, '서울특별시 강남구 *** *** *** ***');
   });
 
@@ -34,12 +34,12 @@ describe('maskAddress', () => {
   });
 
   it('매우 상세한 아파트 주소 마스킹', () => {
-    const result = maskAddress('경기도 성남시 분당구 정자동 178-1 상록마을 우성아파트 301동 1203호');
+    const result = maskAddress('경기도 성남시 분당구 정자동 999-9 상록마을 우성아파트 999동 9999호');
     assert.strictEqual(result, '경기도 성남시 *** *** *** *** *** *** ***');
   });
 
   it('도로명 주소 마스킹 (쉼표 포함)', () => {
-    const result = maskAddress('부산광역시 해운대구 센텀중앙로 78, 센텀그린타워 1501호');
+    const result = maskAddress('부산광역시 해운대구 센텀중앙로 99, 센텀그린타워 9999호');
     assert.strictEqual(result, '부산광역시 해운대구 *** *** *** ***');
   });
 });

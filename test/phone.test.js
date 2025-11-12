@@ -58,6 +58,11 @@ describe('maskPhoneOrTel', () => {
     assert.strictEqual(result, '158812**');
   });
 
+  it('8자리 대표번호 마스킹 (숫자)', () => {
+    const result = maskPhoneOrTel(15881234);
+    assert.strictEqual(result, '158812**');
+  });
+
   it('규칙에 맞지 않는 짧은 번호', () => {
     const result = maskPhoneOrTel('123-4567');
     assert.strictEqual(result, '123-4567');
