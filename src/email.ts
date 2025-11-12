@@ -14,13 +14,9 @@ export function maskEmail(email: string): string {
   const [localPart, domain] = email.split('@');
   const len = localPart.length;
 
-  if (len <= 1) {
-    return `${maskChar}@${domain}`;
+  if (len <= 2) {
+    return `${maskChar.repeat(len)}@${domain}`;
   }
 
-  if (len <= 3) {
-    return `${localPart[0]}${maskChar.repeat(len - 1)}@${domain}`;
-  }
-
-  return `${localPart.slice(0, 3)}${maskChar.repeat(len - 3)}@${domain}`;
+  return `${localPart.slice(0, 2)}${maskChar.repeat(len - 2)}@${domain}`;
 }
