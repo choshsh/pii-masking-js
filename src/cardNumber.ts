@@ -17,11 +17,11 @@ export function maskCardNumber(cardNumber: string): string {
     return cardNumber;
   }
 
-  const first6 = numbers.slice(0, 6);
+  const first4 = numbers.slice(0, 4);
   const last4 = numbers.slice(-4);
-  const middleMasked = maskChar.repeat(numbers.length - 10);
+  const middleMasked = maskChar.repeat(numbers.length - 8);
 
-  const masked = `${first6}${middleMasked}${last4}`;
+  const masked = `${first4}${middleMasked}${last4}`;
 
   return masked.replace(/(.{4})/g, '$1-').replace(/-$/, '');
 }
