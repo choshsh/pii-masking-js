@@ -11,20 +11,23 @@ export function maskAccountNumber(accountNumber: string): string {
     return '';
   }
 
-  // 숫자만 추출
-  const numbers = accountNumber.replace(/\D/g, '');
-
-  if (numbers.length < 8) {
-    // 계좌번호가 너무 짧으면 원본 반환
+  const digitsOnly = accountNumber.replace(/\D/g, '');
+  if (digitsOnly.length <= 4) {
     return accountNumber;
   }
 
-  // 처음 3자리와 마지막 3자리만 보이고 나머지는 마스킹
-  const first = numbers.slice(0, 3);
-  const last = numbers.slice(-3);
-  const middleLength = numbers.length - 6;
+  const chars = accountNumber.split('');
+  let digitsToKeep = 4;
 
-  const masked = `${first}${maskChar.repeat(middleLength)}${last}`;
+  for (let i = chars.length - 1; i >= 0; i--) {
+    if (/\d/.test(chars[i])) {
+      if (digitsToKeep > 0) {
+        digitsToKeep--;
+      } else {
+        chars[i] = maskChar;
+      }
+    }
+  }
 
-  return masked;
+  return chars.join('');
 }
