@@ -11,32 +11,53 @@ export function maskPhone(phone: string, maskChar: string = '*'): string {
 
   // 숫자만 추출
   const numbers = phone.replace(/\D/g, '');
-  
-  if (numbers.length === 0) {
-    return phone;
+  const len = numbers.length;
+
+  if (len < 7) {
+    return phone; // 마스킹하기에 너무 짧은 경우 원본 반환
   }
 
-  // 휴대폰 (010-1234-5678 형태)
-  if (numbers.length === 11 && numbers.startsWith('010')) {
-    return phone.replace(/(\d{3})-?(\d{4})-?(\d{4})/, `$1-${maskChar.repeat(4)}-$3`);
-  }
-  
-  // 일반 전화번호 (02-123-4567, 031-123-4567 등)
-  if (numbers.length === 9 || numbers.length === 10) {
-    const match = phone.match(/(\d{2,3})-?(\d{3,4})-?(\d{4})/);
-    if (match) {
-      return `${match[1]}-${maskChar.repeat(match[2].length)}-${match[3]}`;
+  const last4 = numbers.slice(-4);
+
+  // 서울 지역번호 (02) - 9자리 또는 10자리
+  if (numbers.startsWith('02')) {
+    const prefix = numbers.slice(0, 2);
+    const middle = numbers.slice(2, -4);
+    if (middle.length > 0) {
+      return `${prefix}-${maskChar.repeat(middle.length)}-${last4}`;
     }
   }
 
-  // 기타 전화번호: 중간 부분 마스킹
-  if (numbers.length >= 7) {
-    const start = numbers.slice(0, 3);
-    const end = numbers.slice(-4);
-    const middleLength = numbers.length - 7;
-    return phone.replace(numbers, `${start}${maskChar.repeat(middleLength)}${end}`);
+  // 휴대폰 번호 (11자리) 또는 3자리 지역번호 (10자리)
+  if (len === 11 || len === 10) {
+    const prefix = numbers.slice(0, 3);
+    const middle = numbers.slice(3, -4);
+    if (middle.length > 0) {
+      return `${prefix}-${maskChar.repeat(middle.length)}-${last4}`;
+    }
   }
 
-  return phone;
+  // 기타 9자리 번호 (e.g. 1588-xxxx)
+  if (len === 9) {
+    const prefix = numbers.slice(0, 2);
+    const middle = numbers.slice(2, -4);
+    if (middle.length > 0) {
+      return `${prefix}-${maskChar.repeat(middle.length)}-${last4}`;
+    }
+  }
+
+  // 일반적인 fallback: 앞 3자리와 뒤 4자리를 제외하고 마스킹
+  const prefix = numbers.slice(0, 3);
+  const middle = numbers.slice(3, -4);
+  if (middle.length > 0) {
+    return `${prefix}${maskChar.repeat(middle.length)}${last4}`;
+  }
+
+  // 모든 조건에 맞지 않는 짧은 번호 (e.g. 7자리)는 앞 3자리만 노출
+  if (len >= 4) {
+    return `${numbers.slice(0, len - 4)}${maskChar.repeat(4)}`;
+  }
+
+  return phone; // 그 외의 경우는 원본 반환
 }
 

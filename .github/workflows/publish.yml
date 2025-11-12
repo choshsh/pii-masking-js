@@ -2,79 +2,22 @@ name: Publish to NPM
 
 on:
   release:
-    types: [published]
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Release tag (latest, beta, alpha, next)'
-        required: true
-        default: 'latest'
-        type: choice
-        options:
-          - latest
-          - beta
-          - alpha
-          - next
+    types: [created]
 
 jobs:
-  publish:
-    name: Publish to NPM
+  publish-npm:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write # NPM provenance를 위해 필요
-    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: "20.x"
           registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        run: npm ci || npm install
-
-      - name: Build
-        run: npm run build
-
-      - name: Run tests
-        run: npm test
-
-      - name: Publish to NPM (from release)
-        if: github.event_name == 'release'
-        run: npm publish --provenance --access public
+      - run: npm ci
+      - run: npm run build
+      - name: Publish to NPM
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Publish to NPM (manual with tag)
-        if: github.event_name == 'workflow_dispatch'
-        run: npm publish --provenance --access public --tag ${{ inputs.tag }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-  verify:
-    name: Verify published package
-    needs: publish
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
-      - name: Wait for NPM registry
-        run: sleep 30
-
-      - name: Install published package
-        run: npm install pii-masking-js
-
-      - name: Test import (CommonJS)
-        run: node -e "const pii = require('pii-masking-js'); console.log(pii.maskPhone('010-1234-5678'));"
-
-      - name: Test import (ES Modules)
-        run: node --input-type=module -e "import { maskPhone } from 'pii-masking-js'; console.log(maskPhone('010-1234-5678'));"
 

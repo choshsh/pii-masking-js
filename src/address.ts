@@ -9,31 +9,21 @@ export function maskAddress(address: string, maskChar: string = '*'): string {
     return '';
   }
 
-  // 주소를 공백으로 분리
   const parts = address.trim().split(/\s+/);
 
-  if (parts.length === 0) {
-    return address;
-  }
-
-  // 첫 2개 부분(시/도, 구/군)은 유지하고 나머지는 마스킹
   if (parts.length <= 2) {
-    return address;
+    return address; // 시/도, 구/군 정보만 있는 경우 마스킹하지 않음
   }
 
-  const visibleParts = parts.slice(0, 2);
-  const maskedParts = parts.slice(2).map(part => {
-    // 숫자만 있는 경우 (동/호수 등)
-    if (/^\d+$/.test(part)) {
-      return maskChar.repeat(part.length);
-    }
-    // 문자가 포함된 경우 첫 글자만 보이고 나머지 마스킹
-    if (part.length <= 2) {
-      return part[0] + maskChar.repeat(part.length - 1);
-    }
-    return part[0] + maskChar.repeat(part.length - 1);
-  });
-
-  return [...visibleParts, ...maskedParts].join(' ');
+  const visiblePart = parts.slice(0, 2).join(' ');
+  const maskedLength = address.length - visiblePart.length - 1; // -1 for the space
+  
+  if (maskedLength <= 0) {
+    return visiblePart;
+  }
+  
+  const maskedPart = maskChar.repeat(maskedLength);
+  
+  return `${visiblePart} ${maskedPart}`;
 }
 

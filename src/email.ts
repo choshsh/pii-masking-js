@@ -5,35 +5,21 @@
  * @returns 마스킹된 이메일 주소
  */
 export function maskEmail(email: string, maskChar: string = '*'): string {
-  if (!email || typeof email !== 'string') {
-    return '';
-  }
-
-  const atIndex = email.indexOf('@');
-  if (atIndex === -1) {
+  if (!email || typeof email !== 'string' || !email.includes('@')) {
     return email;
   }
 
-  const localPart = email.slice(0, atIndex);
-  const domain = email.slice(atIndex);
+  const [localPart, domain] = email.split('@');
+  const len = localPart.length;
 
-  if (localPart.length === 0) {
-    return email;
+  if (len <= 1) {
+    return `${maskChar}@${domain}`;
   }
 
-  let maskedLocal: string;
-  
-  if (localPart.length <= 2) {
-    // 길이가 2 이하면 첫 글자만 보이고 나머지 마스킹
-    maskedLocal = localPart[0] + maskChar.repeat(localPart.length - 1);
-  } else if (localPart.length <= 4) {
-    // 길이가 3-4면 앞 2글자 보이고 나머지 마스킹
-    maskedLocal = localPart.slice(0, 2) + maskChar.repeat(localPart.length - 2);
-  } else {
-    // 길이가 5 이상이면 앞 3글자 보이고 나머지 마스킹
-    maskedLocal = localPart.slice(0, 3) + maskChar.repeat(localPart.length - 3);
+  if (len <= 3) {
+    return `${localPart[0]}${maskChar.repeat(len - 1)}@${domain}`;
   }
 
-  return maskedLocal + domain;
+  return `${localPart.slice(0, 3)}${maskChar.repeat(len - 3)}@${domain}`;
 }
 
