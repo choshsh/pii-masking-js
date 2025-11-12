@@ -6,7 +6,6 @@ import { DEFAULT_MASK_CHAR } from './constants';
  * @returns 마스킹된 주소
  */
 export function maskAddress(address: string): string {
-  const maskChar = DEFAULT_MASK_CHAR;
   if (!address || typeof address !== 'string') {
     return '';
   }
@@ -18,13 +17,10 @@ export function maskAddress(address: string): string {
   }
 
   const visiblePart = parts.slice(0, 2).join(' ');
-  const maskedLength = address.length - visiblePart.length - 1; // -1 for the space
-
-  if (maskedLength <= 0) {
-    return visiblePart;
-  }
-
-  const maskedPart = maskChar.repeat(maskedLength);
+  const maskedPart = parts
+    .slice(2)
+    .map(() => '***')
+    .join(' ');
 
   return `${visiblePart} ${maskedPart}`;
 }
