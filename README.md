@@ -7,7 +7,7 @@
 - ✨ **Zero Dependencies**: 외부 의존성 없음
 - 🔒 **Type-Safe**: TypeScript로 작성되어 완전한 타입 지원
 - 📦 **Dual Package**: CommonJS와 ES Modules 모두 지원
-- 🚀 **Node 14+**: Node.js 14 이상 모든 버전 지원
+- 🚀 **Node 16+**: Node.js 16 이상 모든 버전 지원
 - 🎯 **경량**: 최소한의 코드로 구현
 
 ## 설치
@@ -31,12 +31,12 @@ pnpm add pii-masking-js
 ```javascript
 import { maskPhone, maskEmail, maskRnn, maskAddress, maskCardNumber, maskAccountNumber } from 'pii-masking-js';
 
-console.log(maskPhone('010-1234-5678')); // 010-****-5678
-console.log(maskEmail('user@example.com')); // use*@example.com
-console.log(maskRnn('901231-1234567')); // 901231-*******
-console.log(maskCardNumber('1234-5678-9012-3456')); // 1234-56******-3456
-console.log(maskAccountNumber('123-456-789012')); // 123******012
-console.log(maskAddress('서울시 강남구 테헤란로 123')); // 서울시 강남구 테****** ***
+console.log(maskPhone('010-1234-5678')); // 010-12**-56**
+console.log(maskEmail('user@example.com')); // us**@example.com
+console.log(maskRnn('901231-1234567')); // 901231-1******
+console.log(maskCardNumber('1234-5678-9012-3456')); // 1234-****-****-3456
+console.log(maskAccountNumber('123-456-789012')); // ***-***-**9012
+console.log(maskAddress('서울시 강남구 테헤란로 123')); // 서울시 강남구 *** ***
 ```
 
 ### CommonJS
@@ -44,7 +44,7 @@ console.log(maskAddress('서울시 강남구 테헤란로 123')); // 서울시 �
 ```javascript
 const { maskPhone, maskEmail, maskRnn } = require('pii-masking-js');
 
-console.log(maskPhone('010-1234-5678')); // 010-****-5678
+console.log(maskPhone('010-1234-5678')); // 010-12**-56**
 ```
 
 ### TypeScript
@@ -53,77 +53,71 @@ console.log(maskPhone('010-1234-5678')); // 010-****-5678
 import { maskPhone, maskEmail, MaskOptions } from 'pii-masking-js';
 
 const phone: string = maskPhone('010-1234-5678');
-const email: string = maskEmail('user@example.com', '#'); // 커스텀 마스킹 문자
+const email: string = maskEmail('user@example.com');
 ```
 
 ## API
 
-### maskPhone(phone: string, maskChar?: string): string
+### maskPhone(phone: string): string
 
 전화번호를 마스킹합니다.
 
 ```javascript
-maskPhone('010-1234-5678'); // '010-****-5678'
-maskPhone('02-123-4567'); // '02-***-4567'
-maskPhone('031-1234-5678'); // '031-****-5678'
-maskPhone('010-1234-5678', 'X'); // '010-XXXX-5678'
+maskPhone('010-1234-5678'); // '010-12**-56**'
+maskPhone('02-123-4567'); // '02-1**-45**'
+maskPhone('031-1234-5678'); // '031-12**-56**'
 ```
 
-### maskEmail(email: string, maskChar?: string): string
+### maskEmail(email: string): string
 
 이메일 주소를 마스킹합니다.
 
 ```javascript
-maskEmail('user@example.com'); // 'use*@example.com'
-maskEmail('verylongemail@example.com'); // 'ver*************@example.com'
-maskEmail('ab@example.com'); // 'a*@example.com'
-maskEmail('test@example.com', '#'); // 'tes#@example.com'
+maskEmail('user@example.com'); // 'us**@example.com'
+maskEmail('verylongemail@example.com'); // 've***********@example.com'
+maskEmail('ab@example.com'); // '**@example.com'
+maskEmail('test@example.com'); // 'te**@example.com'
 ```
 
-### maskRnn(rnn: string, maskChar?: string): string
+### maskRnn(rnn: string): string
 
 주민등록번호(RRN)를 마스킹합니다.
 
 ```javascript
-maskRnn('901231-1234567'); // '901231-*******'
-maskRnn('9012311234567'); // '901231-*******'
-maskRnn('901231-1234567', 'X'); // '901231-XXXXXXX'
+maskRnn('901231-1234567'); // '901231-1******'
+maskRnn('9012311234567'); // '9012311******'
 ```
 
-### maskAddress(address: string, maskChar?: string): string
+### maskAddress(address: string): string
 
 주소를 마스킹합니다. 시/도와 구/군은 유지하고 나머지를 마스킹합니다.
 
 ```javascript
-maskAddress('서울특별시 강남구 테헤란로 123'); // '서울특별시 강남구 테****** ***'
+maskAddress('서울특별시 강남구 테헤란로 123'); // '서울특별시 강남구 *** ***'
 maskAddress('서울시 강남구 101동 202호'); // '서울시 강남구 *** ***'
 ```
 
-### maskCardNumber(cardNumber: string, maskChar?: string): string
+### maskCardNumber(cardNumber: string): string
 
-카드번호를 마스킹합니다. 앞 6자리와 뒤 4자리만 보이고 나머지를 마스킹합니다.
-
-```javascript
-maskCardNumber('1234567890123456'); // '1234-56******-3456'
-maskCardNumber('1234-5678-9012-3456'); // '1234-56******-3456'
-maskCardNumber('1234567890123456', 'X'); // '1234-56XXXXXX-3456'
-```
-
-### maskAccountNumber(accountNumber: string, maskChar?: string): string
-
-계좌번호를 마스킹합니다. 앞 3자리와 뒤 3자리만 보이고 나머지를 마스킹합니다.
+카드번호를 마스킹합니다. 앞 4자리와 뒤 4자리만 보이고 나머지를 마스킹합니다.
 
 ```javascript
-maskAccountNumber('123-456-789012'); // '123******012'
-maskAccountNumber('123456789012'); // '123******012'
-maskAccountNumber('123456789012', 'X'); // '123XXXXXX012'
+maskCardNumber('1234567890123456'); // '1234-****-****-3456'
+maskCardNumber('1234-5678-9012-3456'); // '1234-****-****-3456'
 ```
 
-## 파라미터
+### maskAccountNumber(accountNumber: string): string
 
-모든 함수는 선택적으로 두 번째 파라미터로 마스킹 문자를 받습니다.
+계좌번호를 마스킹합니다. 뒤 4자리만 보이고 나머지를 마스킹합니다.
 
-- `maskChar` (선택, 기본값: `'*'`): 마스킹에 사용할 문자
+```javascript
+maskAccountNumber('123-456-789012'); // '***-***-**9012'
+maskAccountNumber('123456789012'); // '********9012'
+```
+
+## 마스킹 규칙
+
+각 함수는 고정된 마스킹 문자(`*`)를 사용하여 개인정보를 보호합니다.
 
 ## 브라우저 지원
 
@@ -136,4 +130,3 @@ MIT
 ## 기여
 
 이슈와 Pull Request는 언제나 환영합니다!
-

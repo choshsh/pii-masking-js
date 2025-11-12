@@ -1,5 +1,8 @@
 {
-  "name": "pii-masking-js",
+  "name": "@cho_o/pii-masking-js",
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "1.0.0",
   "description": "PII(개인식별정보) 마스킹을 위한 경량 라이브러리",
   "main": "./dist/index.js",
