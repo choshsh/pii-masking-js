@@ -13,7 +13,7 @@ export { maskPhoneOrTel } from './phoneOrTel';
 export { maskRnn } from './rnn';
 
 export default {
-  maskPhone: maskPhoneOrTel,
+  maskPhoneOrTel,
   maskEmail,
   maskRnn,
   maskAddress,
